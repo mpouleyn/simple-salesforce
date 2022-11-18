@@ -1,0 +1,17 @@
+global class BatchIndexIdSearchCopy implements Database.Batchable <SObject> {
+    global Database.QueryLocator start (Database.BatchableContext bc) {
+        return Database.getQueryLocator('SELECT Id, Index_ID_search__c, Index_ID__c, Index_ID_rollup__c FROM Index__c WHERE Index_ID_rollup__c = FALSE');
+    }
+    
+    global void execute(Database.BatchableContext bc, List<Index__c> indList) {       
+        for(Index__c ind : indList) {
+            ind.Index_ID_search__c = ind.Index_ID__c;
+			ind.Index_ID_rollup__c = true;			            
+        }       
+        update indList;
+    }
+    
+    global void finish(Database.BatchableContext bc) {
+        System.debug('=== This batch is Finished');
+    }    
+}

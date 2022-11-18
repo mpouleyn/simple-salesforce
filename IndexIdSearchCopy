@@ -1,0 +1,9 @@
+global class IndexIdSearchCopy implements Schedulable {
+
+    global void execute(SchedulableContext sc)
+    {
+        BatchIndexIdSearchCopy ba =new BatchIndexIdSearchCopy();
+        Database.executeBatch(ba);
+    }
+
+}
